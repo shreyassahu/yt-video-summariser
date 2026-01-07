@@ -18,7 +18,7 @@ def get_transcript(video_id):
 #Pass the content to Gemini API
 
 def get_summary(text):
-    client = genai.Client(api_key="AIzaSyD2WGeTZURNBwbeEyfoxYCtqTWOmbqaHTU")
+    client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
 
     response = client.models.generate_content(
         model="gemini-3-flash-preview",
