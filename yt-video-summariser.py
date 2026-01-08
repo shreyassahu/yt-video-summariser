@@ -21,7 +21,7 @@ def get_summary(text):
     client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
 
     response = client.models.generate_content(
-        model="gemini-3-flash-preview",
+        model="gemini-2.0-flash",
         contents=[text, "Summarise this transcript of a YT video."]
     )
     return response.text
