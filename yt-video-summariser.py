@@ -3,7 +3,6 @@ from youtube_transcript_api import YouTubeTranscriptApi
 from google import genai
 import streamlit as st
 import re
-from notion_client import Client
 
 #Get the transcript from Youtube API
 
@@ -33,23 +32,7 @@ def extract_video_id(url):
     match = re.search(pattern, url)
     return match.group(1) if match else None
 
-def save_to_notion(title, summary):
-    notion = Client(auth="ntn_y97415458819cuoQBh9R5yAoQ43Yc7QnSPKC3AgbZUB8XC")
-    notion.pages.create(
-        parent={"database_id": "2e2244a43199805c828cea960efca574"},
-        properties={
-            "Name": {"title": [{"text": {"content": title}}]}
-        },
-        children=[
-            {
-                "object": "block",
-                "type": "paragraph",
-                "paragraph": {
-                    "rich_text": [{"text": {"content": summary}}]
-                }
-            }
-        ]
-    )
+
 
 st.title("YT Video Summariser")
 yt_url = st.text_input("Enter YT Video URL")
@@ -61,7 +44,6 @@ if video_id:
         with st.spinner("Generating summary..."):
             summary = get_summary(transcript)
         st.markdown(summary)
-        save_to_notion("YT_Video_Summary", summary)
 
 
 
